@@ -1,5 +1,14 @@
 # HullParam — Parametric Hull-Structure CAD Generator (Shell + Beam)
 
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![OpenCASCADE](https://img.shields.io/badge/OpenCASCADE-7.9%20%28cadquery--ocp%29-1f5fae)](https://github.com/CadQuery/OCP)
+[![Shapely](https://img.shields.io/badge/Shapely-2.x-4b8bbe)](https://shapely.readthedocs.io/)
+[![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)](https://numpy.org/)
+[![three.js](https://img.shields.io/badge/three.js-r160-000000?logo=threedotjs&logoColor=white)](https://threejs.org/)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)](#1-installation-once)
+[![Output](https://img.shields.io/badge/export-STEP%20%7C%20IGES%20%7C%20BREP-orange)](#6-output-files-outputtimestamp)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 Feed in a **complete hull CAD model (skin + internal structure)** and HullParam recognizes the structural members
 and turns them into a **parameter file (`params.yaml`)**. Change the parameters (plate thicknesses, number/spacing of
 frames and bulkheads, number/spacing/section of stiffeners, …) and a **complete, watertight CAD model** (shells + beams)
