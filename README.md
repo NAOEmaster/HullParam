@@ -207,3 +207,9 @@ Tests: `python tests/smoke.py <project> <params.yaml> <out_dir>` (area regressio
 Built on [OpenCASCADE](https://dev.opencascade.org/) via [cadquery-ocp](https://github.com/CadQuery/OCP),
 [Shapely](https://shapely.readthedocs.io/), [NumPy](https://numpy.org/), [PyYAML](https://pyyaml.org/) and
 [three.js](https://threejs.org/) (vendored, MIT). The GPPH model was provided by its original author for research use.
+
+## License
+
+HullParam is released under the [MIT License](LICENSE). The GPPH example data in `examples/GPPH_A4-B1_project/`
+belongs to its original author and is **not** covered by this license. Vendored three.js keeps its MIT license
+(`hullparam/web/vendor/three.LICENSE`); OpenCASCADE (via cadquery-ocp) is LGPL-2.1 with exception and is installed separately.
