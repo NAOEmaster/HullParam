@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HullParam</title>
+<link rel="stylesheet" href="/web/style.css">
+<script type="importmap">
+{ "imports": { "three": "/web/vendor/three.module.min.js" } }
+</script>
+</head>
+<body>
+<header id="toolbar">
+  <div class="brand"><span class="logo">◆</span> HullParam <small id="ver"></small></div>
+  <div class="tb-group">
+    <button id="btnImport" title="CAD(STEP/IGES)에서 파라미터 자동 추출">⤓ CAD 가져오기</button>
+    <button id="btnOpen" title="기존 프로젝트 폴더 열기">📂 프로젝트 열기</button>
+  </div>
+  <div class="tb-group">
+    <button id="btnValidate" title="파라미터 검증 (형상 생성 없이)">✓ 검증</button>
+    <button id="btnSave" title="params.yaml 저장">💾 저장</button>
+    <button id="btnBuild" class="primary" title="저장 후 형상 생성 + 무결성 검사">▶ 생성 (Generate)</button>
+    <button id="btnExport" title="STEP / IGES / BREP / 물성표 내보내기">⇪ 내보내기</button>
+  </div>
+  <div id="jobbox"><div id="jobbar"><div id="jobfill"></div></div><span id="jobmsg">준비</span></div>
+  <div id="projname" title=""></div>
+</header>
+
+<main id="main">
+  <aside id="left">
+    <section class="panel" id="outlinePanel">
+      <div class="ptitle">Outline <span class="pt-actions"><button id="btnShowAll" class="mini">모두 표시</button><button id="btnIsolate" class="mini" title="선택 부재만 표시">격리</button></span></div>
+      <div id="tree" class="scroll"></div>
+    </section>
+    <section class="panel" id="detailsPanel">
+      <div class="ptitle">Details</div>
+      <div id="details" class="scroll"><p class="muted">부재를 선택하세요 (트리 또는 3D 화면 클릭).</p></div>
+    </section>
+  </aside>
+
+  <section id="center">
+    <div id="viewport"></div>
+    <div id="viewtools">
+      <div class="vt-row">
+        <button data-view="iso" title="등각 보기">Iso</button>
+        <button data-view="+x" title="선수에서 보기">Front</button>
+        <button data-view="-y" title="우현에서 보기">Side</button>
+        <button data-view="+z" title="위에서 보기">Top</button>
+        <button data-view="-z" title="아래에서 보기">Bottom</button>
+        <button data-view="fit" title="전체 맞춤">Fit</button>
+      </div>
+      <div class="vt-row">
+        <label><input type="checkbox" id="chkEdges" checked> 모서리</label>
+        <label><input type="checkbox" id="chkBeams" checked> 빔</label>
+        <label><input type="checkbox" id="chkIssues" checked> 검사표시</label>
+        <label><input type="checkbox" id="chkPreview" checked> 배치 미리보기</label>
+      </div>
+      <div class="vt-row">
+        <label>외판 투명도 <input type="range" id="rngHull" min="0" max="100" value="35"></label>
+      </div>
+      <div class="vt-row">
+        <label>색상 <select id="selColor"><option value="cat">부재 종류</option><option value="thk">두께 / 단면적</option></select></label>
+      </div>
+      <div class="vt-row">
+        <label><input type="checkbox" id="chkClip"> 단면(x) </label>
+        <input type="range" id="rngClip" min="0" max="1000" value="500" disabled>
+        <span id="clipVal" class="muted"></span>
+      </div>
+    </div>
+    <div id="legend" hidden></div>
+    <div id="hover" hidden></div>
+    <div id="empty" hidden>
+      <h2>HullParam</h2>
+      <p>선체 구조 전체 CAD(STEP/IGES)를 가져오면 부재를 자동 인식해 파라미터로 만듭니다.</p>
+      <p><button class="primary" id="btnImport2">⤓ CAD 가져오기</button> &nbsp; <button id="btnOpen2">📂 프로젝트 열기</button></p>
+    </div>
+  </section>
+
+  <aside id="right">
+    <div class="ptitle">Parameters <span id="dirty" hidden>● 변경됨</span></div>
+    <nav id="tabs">
+      <button data-tab="layout" class="on">배치</button>
+      <button data-tab="long">종부재</button>
+      <button data-tab="stiff">보강재</button>
+      <button data-tab="thk">두께·재료</button>
+      <button data-tab="yaml">YAML</button>
+    </nav>
+    <div id="form" class="scroll"></div>
+  </aside>
+</main>
+
+<footer id="bottom">
+  <nav id="mtabs">
+    <button data-mtab="check" class="on">검사 결과 <span id="badge"></span></button>
+    <button data-mtab="log">작업 로그</button>
+    <button data-mtab="extract">추출 리포트</button>
+  </nav>
+  <div id="msgs" class="scroll"></div>
+</footer>
+
+<div id="modal" hidden><div id="modalBox"></div></div>
+<script type="module" src="/web/app.js"></script>
+</body>
+</html>

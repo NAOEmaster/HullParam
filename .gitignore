@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+install_log.txt
+output/
+batch_*/
+*_project/output/
+.DS_Store
