@@ -1,0 +1,46 @@
+{
+ "status": "WARN",
+ "stats": {
+  "shell_members": 19,
+  "beam_members": 100,
+  "faces": 575,
+  "beam_edges": 703,
+  "edges": 1490,
+  "t_joints": 376,
+  "free_edges_with_beam": 310,
+  "free_edges_open": 2,
+  "small_edges": 0,
+  "small_faces": 0,
+  "gaps": 0,
+  "floating_beam_edges": 0,
+  "invalid": 0,
+  "tangent_faces": 0,
+  "duplicate_faces": 0,
+  "components": 1,
+  "shell_area_m2": 156.449,
+  "beam_length_m": 431.706,
+  "elapsed_s": 3.7
+ },
+ "issues": [
+  {
+   "level": "INFO",
+   "code": "C08",
+   "message": "T-접합 모서리 376, 빔이 붙은 자유모서리 310, 보강 없는 자유모서리 2 (판 끝단/개구부 등)"
+  },
+  {
+   "level": "WARN",
+   "code": "B00",
+   "message": "Transom_V13: 해당 위치에 붙을 판이 없어 생략 (y=1859.8)"
+  },
+  {
+   "level": "WARN",
+   "code": "B00",
+   "message": "Transom_V14: 해당 위치에 붙을 판이 없어 생략 (y=-1859.8)"
+  },
+  {
+   "level": "WARN",
+   "code": "B00",
+   "message": "교차 후 면 2개 모서리 수리, 최대 공차 0.6925 mm (메싱에는 문제 없음, 정밀도 참고)"
+  }
+ ]
+}

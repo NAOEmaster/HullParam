@@ -1,0 +1,4 @@
+H00_original
+기준 Girder1 z_top=588.0→507.5 mm
+비교 항목: girder height
+이 폴더를 HullParam GUI의 프로젝트 열기에서 고르고 ▶ 생성을 눌러 화면을 확인하세요.

@@ -1,0 +1,338 @@
+# =====================================================================
+#  HullParam parameter file  (GPPH_A4-B1)
+#  단위 mm / 좌표: x 선수방향(+), y 좌현(+), z 위(+)
+#  - 대칭 부재(거더, stringer)는 |y| 로 한쪽만 입력합니다.
+#  - 값이 위치에 따라 변하면 표로 입력:  {x: [..], value: [..]} (선형보간)
+#  - x 참조:  aft, fwd, BH1..BHn(격벽, 선미→선수), F1..Fn(늑골) 또는 숫자
+#  - 생성 후 무결성 검사 결과는 report 에 기록됩니다.
+#  생성: 2026-11-08 14:47
+# =====================================================================
+
+
+# --- 모델 정보
+meta: {name: GPPH_A4-B1, units: mm, source_cad: GPPH_A4-B1_All.step, source_comsol: GPPH_A4-B1.mph, sew_tolerance: 0.5}
+
+# --- 생성/검사 공차 설정
+build: {fuzzy_tolerance: 0.01, snap_tolerance: 2.0, min_station_gap: 100.0, min_member_gap: 30.0, check_small_edge: 2.0,
+  check_small_face: 200.0, viewer_deflection: 3.0}
+
+# --- 재료 (Nastran 출력 등에 사용)
+material: {name: Aluminum 6061, E_MPa: 69000.0, nu: 0.33, density_kg_m3: 2700.0}
+
+# --- 외판 두께 [mm] - deck/side/bottom/chine(스프레이 스트립)/transom
+plating: {deck: 3.956, side: 4.949, bottom: 6.226, chine: 7.604, transom: 8.489}
+
+# --- 격벽: mode=list(위치 직접) | equal(개수로 균등 배치)
+bulkheads:
+  mode: list
+  positions: [6637.9, 9758.5]
+  count: 2
+  thickness: [12.134, 17.693]
+  stiffeners:
+    vertical:
+    - mode: spacing
+      positions: [0.0, 246.9, 493.8, 740.7, 987.6, 1234.6, 1481.5, 1728.4]
+      z_from: 1189.5
+      z_to: 2137.4
+      symmetric: true
+      section: {shape: T, height: 63.191, width: 51.196, t_web: 6.336, t_flange: 6.185}
+      start: 0.0
+      spacing: 246.9
+      count: 8
+    - mode: list
+      positions: [0.0]
+      z_from: 100.1
+      z_to: 969.5
+      symmetric: true
+      section: {shape: T, height: 61.984, width: 50.657, t_web: 6.317, t_flange: 6.399}
+    - mode: list
+      positions: [672.5]
+      z_from: 364.4
+      z_to: 969.5
+      symmetric: true
+      section: {shape: T, height: 63.317, width: 50.688, t_web: 6.367, t_flange: 6.36}
+    - mode: list
+      positions: [941.5]
+      z_from: 470.1
+      z_to: 969.5
+      symmetric: true
+      section: {shape: T, height: 61.836, width: 50.622, t_web: 6.193, t_flange: 6.367}
+    - mode: list
+      positions: [1513.1]
+      z_from: 694.7
+      z_to: 969.5
+      symmetric: true
+      section: {shape: T, height: 51.142, width: 42.248, t_web: 4.89, t_flange: 5.219}
+    horizontal:
+    - z: 979.5
+      y_max: 1693.8
+      section: {shape: T, height: 53.159, width: 41.818, t_web: 5.25, t_flange: 4.5}
+    - z: 1179.5
+      y_max: 1693.8
+      section: {shape: T, height: 44.534, width: 29.478, t_web: 3.913, t_flange: 4.143}
+  per_bulkhead: null
+
+# --- 늑골 공통값(표에서 비워 둔 항목에 사용) / stations 표가 없을 때의 배치 방식
+frames:
+  mode: per_compartment
+  x_aft_ref: 0.0
+  x_fwd_ref: 11896.3
+  per_compartment: [4, 2, 1]
+  spacing: 1327.6
+  positions: [1327.6, 2655.2, 3982.8, 5310.3, 7678.1, 8718.3, 10827.4]
+  min_gap_to_bulkhead: 150.0
+  thickness:
+    x: [1327.6, 2655.2, 3982.8, 5310.3, 7678.1, 8718.3, 10827.4]
+    value: [12.0, 11.83, 12.39, 12.18, 11.96, 11.98, 12.38]
+  web_depth:
+    x: [1327.6, 2655.2, 3982.8, 5310.3, 7678.1, 8718.3, 10827.4]
+    value: [207.3, 210.7, 214.5, 215.1, 245.7, 242.1, 229.3]
+  deck_beam_depth:
+    x: [1327.6, 2655.2, 3982.8, 5310.3, 7678.1, 8718.3, 10827.4]
+    value: [104.3, 103.7, 102.8, 102.8, 103.9, 102.8, 100.7]
+  corner_radius: 200.6
+  flange:
+    enabled: true
+    section: {shape: FLAT, height: 149.3, thickness: 12.37}
+
+# --- 횡부재 표: 위치별 종류(frame|bulkhead)와 치수. auto = 첫 위치~마지막 위치를 목표 간격으로 자동 배치
+stations:
+  auto: {first: 1327.6, last: 10827.4, spacing: 1327.6, keep_bulkheads: true}
+  list:
+  - {x: 1327.6, type: frame, thickness: 12.0, web_depth: 207.3, deck_beam_depth: 104.3, corner_radius: 200.6}
+  - {x: 2655.2, type: frame, thickness: 11.83, web_depth: 210.7, deck_beam_depth: 103.7, corner_radius: 200.6}
+  - {x: 3982.8, type: frame, thickness: 12.39, web_depth: 214.5, deck_beam_depth: 102.8, corner_radius: 200.6}
+  - {x: 5310.3, type: frame, thickness: 12.18, web_depth: 215.1, deck_beam_depth: 102.8, corner_radius: 200.6}
+  - x: 6637.9
+    type: bulkhead
+    thickness: 12.134
+    stiffeners:
+      vertical:
+      - mode: spacing
+        positions: [0.0, 246.9, 493.8, 740.7, 987.6, 1234.6, 1481.5, 1728.4]
+        z_from: 1189.5
+        z_to: 2137.4
+        symmetric: true
+        section: {shape: T, height: 63.191, width: 51.196, t_web: 6.336, t_flange: 6.185}
+        start: 0.0
+        spacing: 246.9
+        count: 8
+      - mode: list
+        positions: [0.0]
+        z_from: 100.1
+        z_to: 969.5
+        symmetric: true
+        section: {shape: T, height: 61.984, width: 50.657, t_web: 6.317, t_flange: 6.399}
+      - mode: list
+        positions: [672.5]
+        z_from: 364.4
+        z_to: 969.5
+        symmetric: true
+        section: {shape: T, height: 63.317, width: 50.688, t_web: 6.367, t_flange: 6.36}
+      - mode: list
+        positions: [941.5]
+        z_from: 470.1
+        z_to: 969.5
+        symmetric: true
+        section: {shape: T, height: 61.836, width: 50.622, t_web: 6.193, t_flange: 6.367}
+      - mode: list
+        positions: [1513.1]
+        z_from: 694.7
+        z_to: 969.5
+        symmetric: true
+        section: {shape: T, height: 51.142, width: 42.248, t_web: 4.89, t_flange: 5.219}
+      horizontal:
+      - z: 979.5
+        y_max: 1693.8
+        section: {shape: T, height: 53.159, width: 41.818, t_web: 5.25, t_flange: 4.5}
+      - z: 1179.5
+        y_max: 1693.8
+        section: {shape: T, height: 44.534, width: 29.478, t_web: 3.913, t_flange: 4.143}
+  - {x: 7678.1, type: frame, thickness: 11.96, web_depth: 245.7, deck_beam_depth: 103.9, corner_radius: 200.6}
+  - {x: 8718.3, type: frame, thickness: 11.98, web_depth: 242.1, deck_beam_depth: 102.8, corner_radius: 200.6}
+  - x: 9758.5
+    type: bulkhead
+    thickness: 17.693
+    stiffeners:
+      vertical:
+      - mode: spacing
+        positions: [0.0, 133.3, 266.5, 399.8, 533.0, 666.3, 799.6, 932.8]
+        z_from: 1189.5
+        z_to: 2137.4
+        symmetric: true
+        section: {shape: T, height: 44.593, width: 39.546, t_web: 4.858, t_flange: 4.492}
+        start: 0.0
+        spacing: 133.3
+        count: 8
+      - mode: list
+        positions: [0.0]
+        z_from: 451.6
+        z_to: 969.5
+        symmetric: true
+        section: {shape: T, height: 42.926, width: 38.025, t_web: 4.496, t_flange: 4.434}
+      - mode: list
+        positions: [201.7]
+        z_from: 617.4
+        z_to: 969.5
+        symmetric: true
+        section: {shape: T, height: 34.448, width: 29.009, t_web: 3.181, t_flange: 3.412}
+      horizontal:
+      - z: 979.5
+        y_max: 681.8
+        section: {shape: T, height: 63.317, width: 50.688, t_web: 6.367, t_flange: 6.36}
+      - z: 1179.5
+        y_max: 914.2
+        section: {shape: T, height: 63.488, width: 50.883, t_web: 6.183, t_flange: 6.328}
+  - {x: 10827.4, type: frame, thickness: 12.38, web_depth: 229.3, deck_beam_depth: 100.7, corner_radius: 200.6}
+
+# --- 종방향 거더 (y 평면): 구간별 x 범위와 상단 높이 z_top
+girders:
+- name: Girder1
+  y: 403.5
+  symmetric: true
+  thickness: 8.508
+  segments:
+  - x_from: aft
+    x_to: F6
+    z_top:
+      x: [-46.5, 1757.3, 1767.3, 2218.3, 6637.6, 6638.6]
+      value: [588.0, 588.0, 587.5, 507.5, 507.5, 507.5]
+  flange:
+    enabled: true
+    section: {shape: FLAT, height: 107.156, thickness: 12.561}
+- name: Girder2
+  y: 1525.0
+  symmetric: true
+  thickness: 7.575
+  segments:
+  - {x_from: aft, x_to: F5, z_top: 733.3}
+  flange:
+    enabled: true
+    section: {shape: FLAT, height: 109.814, thickness: 12.536}
+
+# --- 수평판 (z 평면, 엔진 받침판 등)
+plates:
+- {name: Plate1, z: 588.0, x_from: 300.0, x_to: 886.5, y_from: -403.5, y_to: 403.5, thickness: 10.0}
+
+# --- 종보강재(beam): bottom/deck 는 |y|, side 는 z 위치. mode=list | spacing
+stringers:
+  bottom:
+    mode: list
+    positions: [203.2, 605.2, 807.0, 1008.7, 1391.6]
+    start: 203.2
+    spacing: 292.3
+    count: 5
+    skip_near_girders: 50.0
+    x_from: aft
+    x_to: fwd
+    extents:
+    - [aft, 10998.1]
+    - [aft, 10379.3]
+    - [aft, 10013.1]
+    - [aft, 9597.5]
+    - [aft, 8307.2]
+    section:
+    - {shape: T, height: 66.093, width: 50.849, t_web: 6.442, t_flange: 6.276}
+    - {shape: T, height: 63.902, width: 50.454, t_web: 6.46, t_flange: 6.483}
+    - {shape: T, height: 65.562, width: 50.912, t_web: 6.388, t_flange: 6.458}
+    - {shape: T, height: 39.129, width: 30.03, t_web: 3.992, t_flange: 3.831}
+    - {shape: T, height: 32.654, width: 25.678, t_web: 3.34, t_flange: 3.305}
+  side:
+    mode: list
+    positions: [749.2, 1151.4, 1553.6, 1955.8]
+    start: 749.2
+    spacing: 402.2
+    count: 4
+    x_from: aft
+    x_to: fwd
+    extents:
+    - [aft, 7294.1]
+    - [aft, F6]
+    - [aft, F6]
+    - [aft, BH2]
+    section:
+    - {shape: T, height: 52.423, width: 51.24, t_web: 6.423, t_flange: 6.301}
+    - {shape: T, height: 51.425, width: 50.34, t_web: 6.42, t_flange: 6.291}
+    - {shape: T, height: 51.209, width: 50.28, t_web: 6.481, t_flange: 6.402}
+    - {shape: T, height: 52.598, width: 51.111, t_web: 6.42, t_flange: 6.316}
+  deck:
+    mode: list
+    positions: [203.2, 722.0, 1240.9, 1759.7]
+    start: 203.2
+    spacing: 518.8
+    count: 4
+    skip_near_girders: 0.0
+    x_from: aft
+    x_to: fwd
+    extents:
+    - [aft, 11799.0]
+    - [aft, 11416.1]
+    - [aft, 10739.8]
+    - [aft, 9512.6]
+    section:
+    - {shape: T, height: 63.063, width: 50.192, t_web: 6.366, t_flange: 6.394}
+    - {shape: T, height: 65.115, width: 50.666, t_web: 6.29, t_flange: 6.334}
+    - {shape: T, height: 66.158, width: 51.286, t_web: 6.468, t_flange: 6.324}
+    - {shape: T, height: 63.529, width: 51.237, t_web: 6.336, t_flange: 6.427}
+
+# --- 중심선 보강재(beam): keel(선저 중심선), deck(갑판 중심선)
+centerline:
+  keel:
+    enabled: true
+    section: {shape: FLAT, height: 197.329, thickness: 12.36}
+  deck:
+    enabled: true
+    section: {shape: FLAT, height: 64.036, thickness: 3.141}
+
+# --- 트랜섬 보강재(beam): vertical(|y| 위치) / horizontal(z 위치)
+transom:
+  vertical:
+  - mode: spacing
+    positions: [187.0, 465.8, 744.6, 1023.4, 1302.2, 1580.9, 1859.7]
+    z_from: 1561.3
+    z_to: 2137.4
+    symmetric: true
+    section: {shape: T, height: 50.951, width: 49.863, t_web: 6.379, t_flange: 6.404}
+    start: 187.0
+    spacing: 278.8
+    count: 7
+  - mode: list
+    positions: [1469.2]
+    z_from: 137.5
+    z_to: 1461.3
+    symmetric: true
+    section: {shape: T, height: 52.153, width: 49.92, t_web: 6.33, t_flange: 6.273}
+  - mode: list
+    positions: [1058.5]
+    z_from: 271.5
+    z_to: 1461.3
+    symmetric: true
+    section: {shape: T, height: 50.976, width: 51.063, t_web: 6.357, t_flange: 6.325}
+  - mode: list
+    positions: [647.8]
+    z_from: 405.6
+    z_to: 1461.3
+    symmetric: true
+    section: {shape: T, height: 42.311, width: 42.273, t_web: 5.362, t_flange: 5.202}
+  - mode: list
+    positions: [237.0]
+    z_from: 539.7
+    z_to: 1461.3
+    symmetric: true
+    section: {shape: T, height: 34.123, width: 33.689, t_web: 4.304, t_flange: 4.217}
+  horizontal:
+  - z: 1511.3
+    y_max: 3663.1
+    section: {shape: T, height: 28.743, width: 28.051, t_web: 3.504, t_flange: 3.577}
+
+# --- 자동 인식되지 않은 부재(그대로 유지)의 두께
+fixed_members: {thickness: 8.0}
+
+# --- 선체 외판 정보 (자동 추출, 참고용 - 수정해도 반영되지 않음)
+hull:
+  x_range: [-175.4, 11896.0]
+  half_beam: 1988.2
+  z_keel: -0.0
+  z_deck: 2159.0
+  volume_m3: 66.54
+  skin_area_m2: 122.67

@@ -1,0 +1,40 @@
+# HullParam batch file  (python hullparam.py batch <project> examples/batch_example.yaml)
+# Each case starts from the base parameters and overrides keys with dotted paths:
+#   "plating.bottom", "stations.list.3.type", "stringers.bottom.count", "girders.0.thickness" ...
+# Setting any "stations.auto.*" key (or auto_stations: true) regenerates the
+# frame/bulkhead table from first / last / spacing (existing bulkheads kept).
+# Every case is generated, checked and exported to <out>/<case name>/,
+# and a summary table batch_summary.csv is written.
+base: params.yaml            # relative to the project folder
+
+cases:
+  - name: base
+    set: {}
+
+  - name: frames_every_1000
+    set:
+      stations.auto.spacing: 1000.0
+      girders.0.segments.0.x_to: BH2      # frame numbers change -> end girders on bulkheads
+      girders.1.segments.0.x_to: BH1
+      stringers.bottom.extents: null
+      stringers.side.extents: null
+      stringers.deck.extents: null
+
+  - name: fifth_station_as_bulkhead
+    set:
+      stations.list.4.type: bulkhead        # 0-based: 5th row (x order)
+
+  - name: bottom_auto_180x8_with_CL
+    set:
+      stringers.bottom.mode: auto
+      stringers.bottom.spacing: 180.0
+      stringers.bottom.count: 8
+      stringers.bottom.skip_near_girders: 50.0
+      stringers.bottom.extents: null
+      stringers.bottom.section: {shape: T, height: 66.1, width: 50.8, t_web: 6.44, t_flange: 6.28}
+      centerline.keel.enabled: true
+
+  - name: thick_bottom
+    set:
+      plating.bottom: 8.0
+      frames.thickness: 12.0
