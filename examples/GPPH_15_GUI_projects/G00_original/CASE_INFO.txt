@@ -1,0 +1,4 @@
+G00_original
+기준 |y| = 403.5 / 1210.5 mm
+비교 항목: girder spacing
+이 폴더를 HullParam GUI의 프로젝트 열기에서 고르고 ▶ 생성을 눌러 화면을 확인하세요.

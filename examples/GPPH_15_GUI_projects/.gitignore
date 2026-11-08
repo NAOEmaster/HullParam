@@ -1,0 +1,9 @@
+# Created by prepare_projects.py from examples/GPPH_A4-B1_project
+*/envelope.brep
+*/envelope.json
+*/extract_report.json
+
+# Regenerated locally by HullParam. Keep case parameters and case descriptions.
+*/out/
+*/output/
+*/__pycache__/

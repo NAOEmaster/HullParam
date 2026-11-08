@@ -1,0 +1,4 @@
+H04_plus_120mm
+Girder1 상단 프로파일 기준 +120 mm
+비교 항목: girder height
+이 폴더를 HullParam GUI의 프로젝트 열기에서 고르고 ▶ 생성을 눌러 화면을 확인하세요.
